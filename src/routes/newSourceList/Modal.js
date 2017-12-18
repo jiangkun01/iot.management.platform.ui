@@ -46,9 +46,9 @@ const modal = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="Name" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('name', {
-            initialValue: item.name,
+        <FormItem label="设备编号" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('id', {
+            initialValue: item.id,
             rules: [
               {
                 required: true,
@@ -56,56 +56,35 @@ const modal = ({
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem label="NickName" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('nickName', {
-            initialValue: item.nickName,
-            rules: [
-              {
-                required: true,
-              },
-            ],
-          })(<Input />)}
+        <FormItem label="设备类型" hasFeedback {...formItemLayout}>
+          <select min={18} max={100} style={{width:'100',heigth:'50'}}>
+            <option>追踪器</option>
+            <option>定位器</option>
+            <option>定位器</option>
+          </select>
         </FormItem>
-        <FormItem label="Gender" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('isMale', {
-            initialValue: item.isMale,
-            rules: [
-              {
-                required: true,
-                type: 'boolean',
-              },
-            ],
-          })(
-            <Radio.Group>
-              <Radio value>Male</Radio>
-              <Radio value={false}>Female</Radio>
-            </Radio.Group>
-          )}
-        </FormItem>
-        <FormItem label="Age" hasFeedback {...formItemLayout}>
+        <FormItem label="成本价" hasFeedback {...formItemLayout}>
           {getFieldDecorator('age', {
             initialValue: item.age,
             rules: [
               {
                 required: true,
-                type: 'number',
               },
             ],
           })(<InputNumber min={18} max={100} />)}
         </FormItem>
-        <FormItem label="Phone" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('phone', {
-            initialValue: item.phone,
-            rules: [
-              {
-                required: true,
-                pattern: /^1[34578]\d{9}$/,
-                message: 'The input is not valid phone!',
-              },
-            ],
-          })(<Input />)}
+        <FormItem label="入库类型" hasFeedback {...formItemLayout}>
+          <select min={18} max={100}  style={{width:'20'}}>
+            <option>新资源</option>
+            <option>销售退回</option>
+          </select>
         </FormItem>
-        <FormItem label="E-mail" hasFeedback {...formItemLayout}>
+        <FormItem label="备注" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('email', {
+            initialValue: item.email,
+          })(<Input />)}
+          </FormItem>
+        {/*<FormItem label="E-mail" hasFeedback {...formItemLayout}>
           {getFieldDecorator('email', {
             initialValue: item.email,
             rules: [
@@ -131,7 +110,7 @@ const modal = ({
             options={city}
             placeholder="Pick an address"
           />)}
-        </FormItem>
+        </FormItem>*/}
       </Form>
     </Modal>
   )

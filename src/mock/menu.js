@@ -20,7 +20,7 @@ let database = [
     bpid: '2',
     mpid: '2',
     name: '用户列表维护',
-    route: '/user/list',
+    route: '/user',
   },
   {
     id: '22',
@@ -64,7 +64,7 @@ let database = [
     mpid: '4',
     name: '单位列表',
     icon: '',
-    route: '/UIElement/iconfont',
+    route: '/organization/list',
   },
   {
     id: '42',

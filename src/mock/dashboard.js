@@ -86,7 +86,19 @@ const Dashboard = Mock.mock({
   'recentSales|36': [
     {
       'id|+1': 1,
-      name: '@last',
+      name: 'XX 应用',
+      'status|1-4': 1,
+      date () {
+        return `${Mock.Random.integer(2015, 2016)}-${Mock.Random.date('MM-dd')} ${Mock.Random.time('HH:mm:ss')}`
+      },
+      'price|10-200.1-2': 1,
+    },
+  ],
+  'recentSales1|36': [
+    {
+      'id|+1': 1,
+      name: '追踪器',
+      count: 2,
       'status|1-4': 1,
       date () {
         return `${Mock.Random.integer(2015, 2016)}-${Mock.Random.date('MM-dd')} ${Mock.Random.time('HH:mm:ss')}`
@@ -102,25 +114,25 @@ const Dashboard = Mock.mock({
   },
   numbers: [
     {
-      icon: 'pay-circle-o',
-      color: color.green,
-      title: '数量',
+      icon: 'database',
+      color: color.blue,
+      title: '定位器数量',
       number: 2781,
     }, {
-      icon: 'team',
+      icon: 'database',
       color: color.blue,
-      title: '数量',
+      title: '追踪器数量',
       number: 3241,
     }, {
-      icon: 'message',
-      color: color.purple,
-      title: '警情',
-      number: 253,
-    }, {
-      icon: 'shopping-cart',
+      icon: 'database',
       color: color.red,
-      title: '警情',
-      number: 4324,
+      title: 'sim 流量警情',
+      number: 1,
+    }, {
+      icon: 'database',
+      color: color.red,
+      title: 'sim 状态警情',
+      number: 1,
     },
   ],
 })

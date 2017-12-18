@@ -10,9 +10,9 @@ import Filter from './Filter'
 import Modal from './Modal'
 
 
-const sourceList = ({ location, dispatch, newSourceList, loading }) => {
+const sourceList = ({ location, dispatch, organizationList, loading }) => {
   location.query = queryString.parse(location.search)
-  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = newSourceList
+  const { list, pagination, currentItem, modalVisible, modalType, isMotion, selectedRowKeys } = organizationList
   const { pageSize } = pagination
 
   const modalProps = {
@@ -37,7 +37,7 @@ const sourceList = ({ location, dispatch, newSourceList, loading }) => {
 
   const listProps = {
     dataSource: list,
-    loading: loading.effects['newSourceList/query'],
+    loading: loading.effects['organizationList/query'],
     pagination,
     location,
     isMotion,
@@ -54,13 +54,13 @@ const sourceList = ({ location, dispatch, newSourceList, loading }) => {
     },
     onDeleteItem (id) {
       dispatch({
-        type: 'newSourceList/delete',
+        type: 'organizationList/delete',
         payload: id,
       })
     },
     onEditItem (item) {
       dispatch({
-        type: 'newSourceList/showModal',
+        type: 'organizationList/showModal',
         payload: {
           modalType: 'update',
           currentItem: item,
@@ -71,7 +71,7 @@ const sourceList = ({ location, dispatch, newSourceList, loading }) => {
       selectedRowKeys,
       onChange: (keys) => {
         dispatch({
-          type: 'newSourceList/updateState',
+          type: 'organizationList/updateState',
           payload: {
             selectedRowKeys: keys,
           },
@@ -95,33 +95,33 @@ const sourceList = ({ location, dispatch, newSourceList, loading }) => {
         },
       }))
     },
-    onSearch (fieldsValue) {
+   /* onSearch (fieldsValue) {
       fieldsValue.keyword.length ? dispatch(routerRedux.push({
-        pathname: '/newSourceList',
+        pathname: 'organization/list',
         query: {
           field: fieldsValue.field,
           keyword: fieldsValue.keyword,
         },
       })) : dispatch(routerRedux.push({
-        pathname: '/newSourceList',
+        pathname: 'organization/list',
       }))
-    },
+    },*/
     onAdd () {
       dispatch({
-        type: 'newSourceList/showModal',
+        type: 'organizationList/showModal',
         payload: {
           modalType: 'create',
         },
       })
     },
     switchIsMotion () {
-      dispatch({ type: 'newSourceList/switchIsMotion' })
+      dispatch({ type: 'organizationList/switchIsMotion' })
     },
   }
 
   const handleDeleteItems = () => {
     dispatch({
-      type: 'newSourceList/multiDelete',
+      type: 'organizationList/multiDelete',
       payload: {
         ids: selectedRowKeys,
       },
@@ -155,4 +155,4 @@ sourceList.propTypes = {
   loading: PropTypes.object,
 }
 
-export default connect(({ newSourceList, loading }) => ({ newSourceList, loading }))(sourceList)
+export default connect(({ organizationList, loading }) => ({ organizationList, loading }))(sourceList)

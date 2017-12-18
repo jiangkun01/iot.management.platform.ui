@@ -14,10 +14,11 @@ module.exports = {
   APIV1,
   APIV2,
   api: {
-    userLogin: `${APIV1}/user/login`,
-    userLogout: `${APIV1}/user/logout`,
+    userLogin: '/oauth/token',
+    organizationsList: '/api/core/organization/list',
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
+    newSourceList: `${APIV1}/newSourceList`,
     posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,
     dashboard: `${APIV1}/dashboard`,

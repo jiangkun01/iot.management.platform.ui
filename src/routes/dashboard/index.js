@@ -4,16 +4,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Row, Col, Card } from 'antd'
 import { Page } from 'components'
-import { NumberCard, RecentSales } from './components'
+import { NumberCard, RecentSales, RecentSales1 } from './components'
 const bodyStyle = {
   bodyStyle: {
     height: 432,
     background: '#fff',
-    marginTop: 20
+    marginTop: 20,
   }
 }
 function Dashboard ({ dashboard, loading }) {
-  const { numbers, recentSales} = dashboard
+  const { numbers, recentSales, recentSales1 } = dashboard
   const numberCards = numbers.map((item, key) => (<Col key={key} lg={6} md={12}>
     <NumberCard {...item} />
   </Col>))
@@ -29,18 +29,17 @@ function Dashboard ({ dashboard, loading }) {
     legend: {
       orient: 'vertical',
       left: 'left',
-      data: ['禁定位', '定位并追踪', '停用'],
+      data: ['仅定位', '定位并追踪', '停用'],
     },
     series: [
       {
-        name: '访问来源',
         type: 'pie',
         radius: '55%',
         center: ['50%', '60%'],
         data: [
-          { value: 335, name: '禁定位' },
+          { value: 12, name: '仅定位' },
           { value: 310, name: '定位并追踪' },
-          { value: 234, name: '停用' },
+          { value: 10, name: '停用' },
         ],
         itemStyle: {
           emphasis: {
@@ -54,7 +53,7 @@ function Dashboard ({ dashboard, loading }) {
   }
   const option1 = {
     title: {
-      text: '警情信息',
+      text: '规则警情信息',
       x: 'left',
     },
     tooltip: {

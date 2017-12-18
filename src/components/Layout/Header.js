@@ -19,6 +19,7 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
     navOpenKeys,
     changeOpenKeys,
   }
+  const username = window.localStorage.getItem('userName')
   return (
     <div className={styles.header}>
       {isNavbar
@@ -44,7 +45,7 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
             }}
             title={<span>
               <Icon type="user" />
-              {user.username}
+              {username}
             </span>}
           >
             <Menu.Item key="logout">

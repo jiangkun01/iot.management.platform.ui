@@ -2,14 +2,14 @@
 import modelExtend from 'dva-model-extend'
 import { config } from 'utils'
 import { create, remove, update } from 'services/user'
-import * as sourceService from 'services/sources'
+import * as organizationService from 'services/organization'
 import { pageModel } from './common'
 
-const { query } = sourceService
+const { query } = organizationService
 const { prefix } = config
 
 export default modelExtend(pageModel, {
-  namespace: 'newSourceList',
+  namespace: 'organizationList',
 
   state: {
     currentItem: {},
@@ -22,7 +22,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/source/newSourceList') {
+        if (location.pathname === '/organization/list') {
           const payload = location.query || { page: 1, pageSize: 10 }
           dispatch({
             type: 'query',
@@ -38,14 +38,15 @@ export default modelExtend(pageModel, {
     * query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
+        console.log(data.data.body.list)
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: data.data.body.list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: data.total,
+              total: data.data.body.total,
             },
           },
         })

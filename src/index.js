@@ -10,9 +10,6 @@ const app = dva({
     effects: true,
   }),
   history: createHistory(),
-  onError (error) {
-    message.error(error.message)
-  },
 })
 
 // 2. Model

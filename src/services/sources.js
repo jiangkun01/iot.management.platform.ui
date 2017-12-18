@@ -1,11 +1,11 @@
 import { request, config } from 'utils'
 
 const { api } = config
-const { users } = api
+const { newSourceList } = api
 
 export async function query (params) {
   return request({
-    url: users,
+    url: newSourceList,
     method: 'get',
     data: params,
   })
@@ -13,7 +13,7 @@ export async function query (params) {
 
 export async function remove (params) {
   return request({
-    url: users,
+    url: newSourceList,
     method: 'delete',
     data: params,
   })

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import {FilterItem} from 'components'
 import {Form, Button, Row, Col, DatePicker, Input, Cascader, Switch} from 'antd'
-import city from '../../utils/city'
 
 const Search = Input.Search
 const {RangePicker} = DatePicker
@@ -70,23 +69,10 @@ const Filter = ({onAdd, isMotion, switchIsMotion, onFilterChange, filter, form: 
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{span: 4}} md={{span: 8}}>
-        {getFieldDecorator('id', {initialValue: id })(<Search placeholder="设备编号" size="large" onSearch={handleSubmit}/>)}
+        {getFieldDecorator('id', {initialValue: id })(<Search placeholder="组织名称" size="large" onSearch={handleSubmit}/>)}
       </Col>
-      <Col {...ColProps} xl={{span: 4}} md={{span: 8}}>
-        {getFieldDecorator('name', {initialValue: name })(<Search placeholder="设备类型" size="large" onSearch={handleSubmit}/>)}
-      </Col>
-     {/* <Col {...ColProps} xl={{span: 4}} md={{span: 8}}>
-        {getFieldDecorator('address', {initialValue: address})(
-          <Cascader
-            size="large"
-            style={{width: '100%'}}
-            options={city}
-            placeholder="地址"
-            onChange={handleChange.bind(null, 'address')}
-          />)}
-      </Col>*/}
       <Col {...ColProps} xl={{span: 6}} md={{span: 8}} sm={{span: 12}}>
-        <FilterItem label="时间">
+        <FilterItem label="加入时间">
           {getFieldDecorator('createTime', {initialValue: initialCreateTime})(
             <RangePicker style={{width: '100%'}} size="large" onChange={handleChange.bind(null, 'createTime')}/>
           )}
@@ -95,15 +81,13 @@ const Filter = ({onAdd, isMotion, switchIsMotion, onFilterChange, filter, form: 
       <div style={{float:'rigth'}}>
         <Button type="primary" size="large" className="margin-right" onClick={handleSubmit}>查询</Button>
         <Button size="large" onClick={handleReset}>重置</Button>
-       {/* <a style={{marginleft: '8',marginLeft:'10'}}>展开/关闭 </a>*/}
       </div>
       <br/>
       <Col {...TwoColProps} xl={{span: 10}} md={{span: 24}} sm={{span: 24}}>
         <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
           <div>
-            <Button size="large" type="primary" onClick={onAdd} className="margin-right">新资源入库</Button>
+            <Button size="large" type="primary" onClick={onAdd} className="margin-right">增加新的组织节点</Button>
             <Button size="large" type="dashed" onClick={onAdd} className="margin-right">资源出库</Button>
-            {/*<Button size="large" type="danger" onClick={onAdd} className="margin-right">加入维修列表</Button>*/}
           </div>
         </div>
       </Col>

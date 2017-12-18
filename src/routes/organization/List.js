@@ -28,40 +28,17 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
 
   const columns = [
     {
-      title: '序号',
-      dataIndex: 'index',
-      key: 'index',
-      width: 64,
-      value: 1,
-    }, {
-      title: '设备编号',
+      title: '组织编号',
       dataIndex: 'id',
       key: 'id',
-     /* render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,*/
     }, {
-      title: '设备类型',
+      title: '组织名称',
       dataIndex: 'name',
       key: 'name',
     }, {
-      title: '成本价',
-      dataIndex: 'age',
-      key: 'age',
-    }, {
-      title: '入库时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
-    }, {
-      title: '入库类型',
-      dataIndex: 'nickName',
-      key: 'nickName',
-    }, {
-      title: '备注',
-      dataIndex: 'email',
-      key: 'email',
-    }, {
-      title: '操作人',
-      dataIndex: 'address',
-      key: 'address',
+      title: '添加时间',
+      dataIndex: 'addTime',
+      key: 'addTime',
     }, {
       title: '操作',
       key: 'operation',
@@ -75,7 +52,6 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
     page: location.query.page,
     current: tableProps.pagination.current,
   }
-  console.log(getBodyWrapperProps)
   const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (

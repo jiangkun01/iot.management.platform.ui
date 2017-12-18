@@ -20,5 +20,5 @@ Iconfont.propTypes = {
   colorful: PropTypes.bool,
   className: PropTypes.string,
 }
-
+console.log(Iconfont)
 export default Iconfont

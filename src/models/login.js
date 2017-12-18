@@ -11,17 +11,11 @@ export default {
       payload,
     }, { put, call, select }) {
       const data = yield call(login, payload)
-      const { locationQuery } = yield select(_ => _.app)
-      if (data.success) {
-        const { from } = locationQuery
-        yield put({ type: 'app/query' })
-        if (from && from !== '/login') {
-          yield put(routerRedux.push(from))
-        } else {
-          yield put(routerRedux.push('/dashboard'))
-        }
+      yield put({ type: 'app/query' })
+      if (data.status !== 200) {
+        window.alert('请检查用户名密码是否正确')
       } else {
-        throw data
+        yield put(routerRedux.push('/dashboard'))
       }
     },
   },

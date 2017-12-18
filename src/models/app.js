@@ -27,8 +27,8 @@ export default {
       },
     ],
     menuPopoverVisible: false,
-    siderFold: window.localStorage.getItem(`${prefix}siderFold`) === 'true',
-    darkTheme: window.localStorage.getItem(`${prefix}darkTheme`) === 'true',
+    siderFold: false,
+    darkTheme: false,
     isNavbar: document.body.clientWidth < 769,
     navOpenKeys: JSON.parse(window.localStorage.getItem(`${prefix}navOpenKeys`)) || [],
     locationPathname: '',
@@ -65,28 +65,16 @@ export default {
     * query ({
       payload,
     }, { call, put, select }) {
-      const { success, user } = yield call(query, payload)
       const { locationPathname } = yield select(_ => _.app)
-      if (success && user) {
+      const token = window.localStorage.getItem('token')
+      if (token) {
         const { list } = yield call(menusService.query)
-        const { permissions } = user
         let menu = list
-        if (permissions.role === EnumRoleType.ADMIN || permissions.role === EnumRoleType.DEVELOPER) {
-          permissions.visit = list.map(item => item.id)
-        } else {
-          menu = list.filter((item) => {
-            const cases = [
-              permissions.visit.includes(item.id),
-              item.mpid ? permissions.visit.includes(item.mpid) || item.mpid === '-1' : true,
-              item.bpid ? permissions.visit.includes(item.bpid) : true,
-            ]
-            return cases.every(_ => _)
-          })
-        }
+        const permissions = {}
+        permissions.visit = list.map(item => item.id)
         yield put({
           type: 'updateState',
           payload: {
-            user,
             permissions,
             menu,
           },
@@ -106,15 +94,10 @@ export default {
       }
     },
 
-    * logout ({
-      payload,
-    }, { call, put }) {
-      const data = yield call(logout, parse(payload))
-      if (data.success) {
-        yield put({ type: 'query' })
-      } else {
-        throw (data)
-      }
+    * logout (action, { put }) {
+      window.localStorage.removeItem('token')
+      window.localStorage.removeItem('userName')
+      yield put({ type: 'query' })
     },
 
     * changeNavbar (action, { put, select }) {

@@ -23,27 +23,26 @@ const status = {
   },
 }
 
-function RecentSales ({ data }) {
+function RecentSales1 ({ data }) {
   const columns = [
     {
-      title: '应用编号',
+      title: '设备编号',
       dataIndex: 'id',
     },
     {
-      title: '应用名称',
+      title: '设备名称',
       dataIndex: 'name',
     }, {
-      title: '状态',
+      title: '应用状态',
       dataIndex: 'status',
       render: text => <Tag color={status[text].color}>{status[text].text}</Tag>,
     }, {
-      title: '时间',
+      title: '入库时间',
       dataIndex: 'date',
       render: text => new Date(text).format('yyyy-MM-dd'),
     }, {
       title: '操作',
       dataIndex: 'price',
-      render: (text, it) => <span style={{ color: status[it.status].color }}>详情</span>,
     },
   ]
   return (
@@ -52,8 +51,9 @@ function RecentSales ({ data }) {
     </div>
   )
 }
-RecentSales.propTypes = {
+
+RecentSales1.propTypes = {
   data: PropTypes.array,
 }
 
-export default RecentSales
+export default RecentSales1
