@@ -37,8 +37,8 @@ const List = ({ onDeleteItem, onEditItem, isMotion, location, ...tableProps }) =
       key: 'name',
     }, {
       title: '添加时间',
-      dataIndex: 'addTime',
-      key: 'addTime',
+      dataIndex: 'addtime',
+      key: 'addtime',
     }, {
       title: '操作',
       key: 'operation',

@@ -24,13 +24,13 @@ const sourceList = ({ location, dispatch, organizationList, loading }) => {
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
-        type: `newSourceList/${modalType}`,
+        type: `organizationList/${modalType}`,
         payload: data,
       })
     },
     onCancel () {
       dispatch({
-        type: 'newSourceList/hideModal',
+        type: 'organizationList/hideModal',
       })
     },
   }

@@ -1,11 +1,10 @@
 /* global window */
 import modelExtend from 'dva-model-extend'
 import { config } from 'utils'
-import { create, remove, update } from 'services/user'
 import * as organizationService from 'services/organization'
 import { pageModel } from './common'
 
-const { query } = organizationService
+const { query, rm, rmMu, create, update} = organizationService
 const { prefix } = config
 
 export default modelExtend(pageModel, {
@@ -38,7 +37,6 @@ export default modelExtend(pageModel, {
     * query ({ payload = {} }, { call, put }) {
       const data = yield call(query, payload)
       if (data) {
-        console.log(data.data.body.list)
         yield put({
           type: 'querySuccess',
           payload: {
@@ -53,11 +51,9 @@ export default modelExtend(pageModel, {
       }
     },
 
-    * delete ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload })
-      const { selectedRowKeys } = yield select(_ => _.user)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
+    * delete ({ payload }, { call, put }) {
+      const data = yield call(rm, { id: payload })
+      if (data.data.ok) {
         yield put({ type: 'query' })
       } else {
         throw data
@@ -65,9 +61,8 @@ export default modelExtend(pageModel, {
     },
 
     * multiDelete ({ payload }, { call, put }) {
-      const data = yield call(sourceService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
+      const data = yield call(rmMu, payload)
+      if (data.data.ok) {
         yield put({ type: 'query' })
       } else {
         throw data
@@ -76,7 +71,7 @@ export default modelExtend(pageModel, {
 
     * create ({ payload }, { call, put }) {
       const data = yield call(create, payload)
-      if (data.success) {
+      if (data.data.ok) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {
@@ -84,11 +79,10 @@ export default modelExtend(pageModel, {
       }
     },
 
-    * update ({ payload }, { select, call, put }) {
-      const id = yield select(({ user }) => user.currentItem.id)
-      const newUser = { ...payload, id }
-      const data = yield call(update, newUser)
-      if (data.success) {
+    * update ({ payload }, { call, put }) {
+      console.log(payload)
+      const data = yield call(update, payload)
+      if (data.data.ok) {
         yield put({ type: 'hideModal' })
         yield put({ type: 'query' })
       } else {

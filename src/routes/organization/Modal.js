@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
-import city from '../../utils/city'
+import { Form, Input, Modal } from 'antd'
 
 const FormItem = Form.Item
 
@@ -31,7 +30,7 @@ const modal = ({
       }
       const data = {
         ...getFieldsValue(),
-        key: item.key,
+        id: item.id,
       }
       onOk(data)
     })

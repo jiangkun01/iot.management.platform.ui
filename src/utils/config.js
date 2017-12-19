@@ -16,7 +16,10 @@ module.exports = {
   api: {
     userLogin: '/oauth/token',
     organizationsList: '/api/core/organization/list',
-    userInfo: `${APIV1}/userInfo`,
+    deleteOrganization: '/api/core/organization/delete',
+    deleteOrganizationMu: '/api/core/organization/deleteMu',
+    createOrganization: '/api/core/organization/create',
+    updateOrganization: '/api/core/organization/update',
     users: `${APIV1}/users`,
     newSourceList: `${APIV1}/newSourceList`,
     posts: `${APIV1}/posts`,
