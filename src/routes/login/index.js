@@ -23,7 +23,6 @@ const Login = ({
       dispatch({ type: 'login/login', payload: values })
     })
   }
-
   return (
     <div className={styles.form}>
       <div className={styles.logo}>

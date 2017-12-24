@@ -20,7 +20,7 @@ module.exports = {
     deleteOrganizationMu: '/api/core/organization/deleteMu',
     createOrganization: '/api/core/organization/create',
     updateOrganization: '/api/core/organization/update',
-    users: `${APIV1}/users`,
+    userList: '/api/core/user/list',
     newSourceList: `${APIV1}/newSourceList`,
     posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,

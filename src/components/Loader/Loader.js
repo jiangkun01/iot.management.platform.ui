@@ -11,7 +11,7 @@ const Loader = ({ spinning, fullScreen }) => {
   >
     <div className={styles.warpper}>
       <div className={styles.inner} />
-      <div className={styles.text} >LOADING</div>
+      <div className={styles.text} >加载中</div>
     </div>
   </div>)
 }

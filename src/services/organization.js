@@ -4,7 +4,6 @@ import axios from 'axios'
 const { api } = config
 const { organizationsList, deleteOrganization, deleteOrganizationMu, createOrganization, updateOrganization } = api
 const token = window.localStorage.getItem('token')
-
 export async function query (payload) {
   if (payload.createTime !== undefined) {
     const cofig = {

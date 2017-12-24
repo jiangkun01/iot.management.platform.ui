@@ -149,7 +149,7 @@ const sourceList = ({ location, dispatch, organizationList, loading }) => {
 }
 
 sourceList.propTypes = {
-  newSourceList: PropTypes.object,
+  organizationList: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.object,

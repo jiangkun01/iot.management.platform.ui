@@ -1,36 +1,15 @@
-import { request, config } from 'utils'
+import { config } from 'utils'
+import axios from 'axios'
 
 const { api } = config
-const { user } = api
-
-export async function query (params) {
-  return request({
-    url: user,
+const { userList } = api
+const token = window.localStorage.getItem('token')
+export async function query (param) {
+  return axios({
+    baseURL: userList,
     method: 'get',
-    data: params,
-  })
-}
-
-export async function create (params) {
-  return request({
-    url: user.replace('/:id', ''),
-    method: 'post',
-    data: params,
-  })
-}
-
-export async function remove (params) {
-  return request({
-    url: user,
-    method: 'delete',
-    data: params,
-  })
-}
-
-export async function update (params) {
-  return request({
-    url: user,
-    method: 'patch',
-    data: params,
+    type: 'josn',
+    headers: { Authorization: token },
+    params: param,
   })
 }

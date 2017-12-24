@@ -245,7 +245,7 @@ let database = [
     mpid: '8',
     name: '短信平台',
     icon: '',
-    route: '',
+    route: '/test',
   },
 ]
 
