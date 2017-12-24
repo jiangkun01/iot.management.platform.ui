@@ -7,6 +7,7 @@ export default modelExtend({
     list: [],
     loading: true,
     total: 0,
+    selectedRowKey: [],
   },
   subscriptions: { // 因为此类框架都是无状态的，所以 subscriptions 基本可以理解为 当页面加载完后的处理， 比如：路由匹配后从接口获取数据，接收到键盘或者触摸事件后的自动处理等等，以 key/value 格式定义 subscription。subscription 是订阅，用于订阅一个数据源，然后根据需要 dispatch 相应的 action。在 app.start() 时被执行，数据源可以是当前的时间、服务器的 websocket 连接、keyboard 输入、geolocation 变化、history 路由变化等等。
     setup ({ dispatch, history }) {
@@ -48,6 +49,9 @@ export default modelExtend({
     },
     loadingState (state, { loading }) {
       return { ...state, loading }
+    },
+    selectedRowKeys (state, { selectedRowKey }) {
+      return { ...state, selectedRowKey }
     },
   },
 })
