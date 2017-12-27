@@ -1,10 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'dva'
-import { Table, Button, Row, Col, Popconfirm } from 'antd'
+import { Table, Button, Row, Col, Popconfirm, Modal, message } from 'antd'
 import { DropOption } from 'components'
 
 const List = ({ dispatch, userController }) => {
+  const loadingState = () => {
+    dispatch({
+      type: 'userController/loadingState',
+      loading: true,
+    })
+  }
+  const handleMenuClick = (record, e) => {
+    if (e.key === '1') {
+      //onEditItem(record)
+    } else if (e.key === '2') {
+      Modal.confirm({
+        title: '确认删除吗?',
+        onOk () {
+          loadingState()
+          dispatch({
+            type: 'userController/rm',
+            userId: record.userId,
+          })
+        },
+      })
+    }
+  }
   const columns = [{
     title: '编号',
     dataIndex: 'userId',
@@ -14,18 +35,25 @@ const List = ({ dispatch, userController }) => {
     dataIndex: 'username',
     key: 'username',
   }, {
+    title: '角色',
+    dataIndex: 'roleName',
+    key: 'roleName',
+  }, {
     title: '操作',
     key: 'operation',
     width: 100,
-    render: () => {
-      return <DropOption  menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
+    render: (text, record) => {
+      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '修改' }, { key: '2', name: '删除' }]} />
     },
   }]
   const tableChange = (page) => {
+    loadingState()
     dispatch({
       type: 'userController/initList',
       page: page.current,
       pageSize: page.pageSize,
+      name: userController.name,
+      role: userController.role,
     })
   }
   const loadingSpin = {
@@ -35,7 +63,8 @@ const List = ({ dispatch, userController }) => {
   const pagination = { // 这是底部分页
     showQuickJumper: true,
     showSizeChanger: true,
-    defaultPageSize: 10,
+    defaultPageSize: userController.pageSize,
+    current: userController.page,
     pageSizeOptions: ['10', '20', '30'],
     total: userController.total,
     showTotal: total => `共 ${total} 条`,
@@ -43,7 +72,6 @@ const List = ({ dispatch, userController }) => {
   }
   const rowSelection = {
     onChange: (selectedRowKeys) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`)
       dispatch({
         type: 'userController/selectedRowKeys',
         selectedRowKey: selectedRowKeys,
@@ -51,18 +79,15 @@ const List = ({ dispatch, userController }) => {
     },
   }
   const handleDeleteItems = () => {
-    console.log(1)
-    // dispatch({
-    //   type: 'newSourceList/multiDelete',
-    //   payload: {
-    //     ids: selectedRowKeys,
-    //   },
-    // })
+    loadingState()
+    dispatch({
+      type: 'userController/rmMu',
+      userIds: userController.selectedRowKey,
+    })
   }
   // rowSelection 是check
   return (
     <div>
-      <Button type="primary">新增</Button>
       {
         userController.selectedRowKey.length > 0 &&
         <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
@@ -84,4 +109,4 @@ List.propTypes = {
   userController: PropTypes.object,
   dispatch: PropTypes.func,
 }
-export default connect(({ userController }) => ({ userController }))(List)
+export default List
