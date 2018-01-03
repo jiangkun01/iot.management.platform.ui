@@ -35,6 +35,7 @@ const List = ({ dispatch, userController }) => {
   }
   const columns = [{
     title: '序号',
+    key: 'index',
     render: (text, record, index) => {
       return (index + 1)
     },
@@ -82,17 +83,17 @@ const List = ({ dispatch, userController }) => {
     showTotal: total => `共 ${total} 条`,
     loading: loadingSpin,
   }
-  const rowSelection = {
-    selectedRowKey,
-    onChange: (keys) => {
-
-      console.log(keys)
-      dispatch({
-        type: 'userController/selectedRowKeys',
-        selectedRowKey: keys,
-      })
-    },
-  }
+  // const rowSelection = {
+  //   selectedRowKey,
+  //   onChange: (keys) => {
+  //
+  //     console.log(keys)
+  //     dispatch({
+  //       type: 'userController/selectedRowKeys',
+  //       selectedRowKey: keys,
+  //     })
+  //   },
+  // }
   const handleDeleteItems = () => {
     loadingState()
     dispatch({
@@ -116,7 +117,7 @@ const List = ({ dispatch, userController }) => {
         </Row>
       }
       <div>
-        <Table rowKey={user => user.userId} columns={columns} scroll={{ x: 980 }} dataSource={userController.list} pagination={pagination} onChange={tableChange} loading={loadingSpin} />
+        <Table rowKey={record => record.userId} columns={columns} scroll={{ x: 980 }} dataSource={userController.list} pagination={pagination} onChange={tableChange} loading={loadingSpin} />
       </div>
     </div>
   )
