@@ -29,13 +29,22 @@ const Filter = ({ form, dispatch, userController }) => {
     })
   }
   const reset = () => {
-    form.setFieldsValue({ name: '', role: '1' })
+    form.resetFields()
     loadingState()
     pageState()
     dispatch({
       type: 'userController/initList',
       name: '',
       role: '',
+    })
+  }
+  const create = () => {
+    dispatch({
+      type: 'userController/isVisible',
+      isVisible: true,
+      isPassswordRequired: true,
+      user: {},
+      title: '新建',
     })
   }
   return (
@@ -60,7 +69,7 @@ const Filter = ({ form, dispatch, userController }) => {
         </Row>
         <Row>
           <Col>
-            <Button type="dashed">新增</Button>
+            <Button type="dashed" onClick={create}>新增</Button>
           </Col>
           <Col span={24} style={{ textAlign: 'right' }}>
             <Button type="primary" htmlType="submit" onClick={searchList}>查询</Button>

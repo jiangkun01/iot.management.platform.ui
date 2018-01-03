@@ -16,6 +16,11 @@ export default modelExtend({
     role: '',
     page: 1,
     pageSize: 10,
+    isVisible: false,
+    user: {},
+    title: '',
+    isPassswordRequired: true,
+    flag: false,
   },
   subscriptions: { // 因为此类框架都是无状态的，所以 subscriptions 基本可以理解为 当页面加载完后的处理， 比如：路由匹配后从接口获取数据，接收到键盘或者触摸事件后的自动处理等等，以 key/value 格式定义 subscription。subscription 是订阅，用于订阅一个数据源，然后根据需要 dispatch 相应的 action。在 app.start() 时被执行，数据源可以是当前的时间、服务器的 websocket 连接、keyboard 输入、geolocation 变化、history 路由变化等等。
     setup ({ dispatch, history }) {
@@ -51,12 +56,19 @@ export default modelExtend({
       if (data.data.ok) {
         message.success('删除成功')
         const stateUserController = yield select(state => state.userController)
+        const stat = yield select(state => state)
+        console.log(stat)
+        // console.log(stateUserController.selectedRowKey.filter(_ => _ !== userId))
         yield put({
           type: 'initList',
           page: stateUserController.page,
           pageSize: stateUserController.pageSize,
           name: stateUserController.name,
           role: stateUserController.role,
+        })
+        yield put({
+          type: 'selectedRowKeys',
+          selectedRowKey: stateUserController.selectedRowKey.filter(_ => _ !== userId),
         })
       } else {
         message.error(data.data.message)
@@ -82,6 +94,46 @@ export default modelExtend({
         message.error(data.data.message)
       }
     },
+    * create ({ user }, { call, put, select }) {
+      const data = yield call(userService.create, { user })
+      if (data.data.ok) {
+        message.success('添加成功')
+        const stateUserController = yield select(state => state.userController)
+        yield put({
+          type: 'initList',
+          page: 1,
+          pageSize: stateUserController.pageSize,
+          name: '',
+          role: '',
+        })
+      } else {
+        message.error(data.data.message)
+      }
+    },
+    * update ({ user }, { call, put, select }) {
+      const data = yield call(userService.update, { user })
+      if (data.data.ok) {
+        message.success('修改成功')
+        const stateUserController = yield select(state => state.userController)
+        yield put({
+          type: 'initList',
+          page: 1,
+          pageSize: stateUserController.pageSize,
+          name: '',
+          role: '',
+        })
+      } else {
+        message.error(data.data.message)
+      }
+    },
+    * validateUniqueByUsername ({ username, callbackV }, { call }) {
+      const data = yield call(userService.vaUserName, { username })
+      if (!data.data.ok) {
+        callbackV('请检查用户名的唯一性')
+      } else {
+        callbackV()
+      }
+    },
   },
   reducers: { // 以 key/value 格式定义 reducer。用于处理 同步操作 ，唯一可以修改 state 的地方。由 action 触发。
     initListSuccess (state, { list, total, roleList, page, name, role, pageSize, loading }) {
@@ -95,6 +147,9 @@ export default modelExtend({
     },
     pageState (state, { page }) {
       return { ...state, page }
+    },
+    isVisible (state, { isVisible, isPassswordRequired, user, title }) {
+      return { ...state, isVisible, isPassswordRequired, user, title }
     },
   },
 })

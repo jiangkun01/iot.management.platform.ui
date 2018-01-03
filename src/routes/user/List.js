@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Button, Row, Col, Popconfirm, Modal, message } from 'antd'
+import { Table, Button, Row, Col, Popconfirm, Modal } from 'antd'
 import { DropOption } from 'components'
 
 const List = ({ dispatch, userController }) => {
+  const { selectedRowKey } = userController
   const loadingState = () => {
     dispatch({
       type: 'userController/loadingState',
@@ -12,7 +13,13 @@ const List = ({ dispatch, userController }) => {
   }
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
-      //onEditItem(record)
+      dispatch({
+        type: 'userController/isVisible',
+        isVisible: true,
+        isPassswordRequired: false,
+        user: record,
+        title: '修改',
+      })
     } else if (e.key === '2') {
       Modal.confirm({
         title: '确认删除吗?',
@@ -27,6 +34,11 @@ const List = ({ dispatch, userController }) => {
     }
   }
   const columns = [{
+    title: '序号',
+    render: (text, record, index) => {
+      return (index + 1)
+    },
+  }, {
     title: '编号',
     dataIndex: 'userId',
     key: 'userId',
@@ -71,10 +83,13 @@ const List = ({ dispatch, userController }) => {
     loading: loadingSpin,
   }
   const rowSelection = {
-    onChange: (selectedRowKeys) => {
+    selectedRowKey,
+    onChange: (keys) => {
+
+      console.log(keys)
       dispatch({
         type: 'userController/selectedRowKeys',
-        selectedRowKey: selectedRowKeys,
+        selectedRowKey: keys,
       })
     },
   }
@@ -82,17 +97,18 @@ const List = ({ dispatch, userController }) => {
     loadingState()
     dispatch({
       type: 'userController/rmMu',
-      userIds: userController.selectedRowKey,
+      userIds: selectedRowKey,
     })
   }
   // rowSelection 是check
+  // rowSelection={rowSelection}
   return (
     <div>
       {
-        userController.selectedRowKey.length > 0 &&
+        selectedRowKey.length > 0 &&
         <Row style={{ marginBottom: 24, textAlign: 'right', fontSize: 13 }}>
           <Col>
-            {`选中 ${userController.selectedRowKey.length} 条 `}
+            {`选中 ${selectedRowKey.length} 条 `}
             <Popconfirm title={'确定删除选中的全部吗?'} placement="left" onConfirm={handleDeleteItems}>
               <Button type="primary" size="large" style={{ marginLeft: 8 }}>删除</Button>
             </Popconfirm>
@@ -100,7 +116,7 @@ const List = ({ dispatch, userController }) => {
         </Row>
       }
       <div>
-        <Table rowSelection={rowSelection} rowKey={record => record.userId} columns={columns} scroll={{ x: 980 }} dataSource={userController.list} pagination={pagination} onChange={tableChange} loading={loadingSpin} />
+        <Table rowKey={user => user.userId} columns={columns} scroll={{ x: 980 }} dataSource={userController.list} pagination={pagination} onChange={tableChange} loading={loadingSpin} />
       </div>
     </div>
   )

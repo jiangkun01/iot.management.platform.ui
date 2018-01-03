@@ -4,6 +4,7 @@ import { Page } from 'components'
 import PropTypes from 'prop-types'
 import List from './List'
 import Filter from './Filter'
+import Model from './Modal'
 // import model from './Form'
 
 // 传递model 里面的 state属性
@@ -12,11 +13,11 @@ const index = ({ dispatch, userController }) => {
     dispatch: dispatch,
     userController: userController,
   }
-
   return (
     <Page inner>
       <Filter {...listProps} />
       <List {...listProps} />
+      <Model {...listProps} />
     </Page>
   )
 }
